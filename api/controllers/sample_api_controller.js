@@ -63,7 +63,7 @@ exports.singleImageUpload = (req, res, next) => {
     const image=  req.file.filename;
     res.status(200).json({
         status: 1,
-        imageUrl: "http://192.168.0.4:3000/images/" + image,
+        imageUrl: "http://192.168.0.5:3001/images/" + image,
     });
 };
 
@@ -73,7 +73,7 @@ exports.singleImageUploadWithData = (req, res, next) => {
     const age = req.body.age;
     res.status(200).json({
         status: 1,
-        student: {"name": name, "age": age, "imageUrl" : "http://192.168.0.4:3000/images/" + image},
+        student: {"name": name, "age": age, "imageUrl" : "http://192.168.0.5:3001/images/" + image},
     });
 };
 
@@ -84,7 +84,7 @@ exports.multipleImageUploadWithData = (req, res, next) => {
 
     var imageUrl = [];
     for (let  i = 0; i < image.length; i++) {
-        imageUrl.push(new ImageModel("http://192.168.0.7:3000/images/" + image[i]['filename']));
+        imageUrl.push(new ImageModel("http://192.168.0.5:3001/images/" + image[i]['filename']));
     }
 
     res.status(200).json({

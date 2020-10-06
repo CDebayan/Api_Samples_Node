@@ -1,13 +1,21 @@
 const ImageModel = require('../models/ImageModel');
 
-exports.getCall = (req, res, next) => {
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
+exports.getCall = async (req, res, next) => {
+    await sleep(2000);
     res.status(200).json({
         status: 1,
         student: {"id": 1, "name": "Dc", "age": 25},
     });
 };
 
-exports.getCallList = (req, res, next) => {
+exports.getCallList = async (req, res, next) => {
+    await sleep(2000);
     res.status(200).json({
         status: 1,
         studentList: [
@@ -19,7 +27,8 @@ exports.getCallList = (req, res, next) => {
     });
 };
 
-exports.getCallPathParam = (req, res, next) => {
+exports.getCallPathParam = async (req, res, next) => {
+    await sleep(2000);
     const id = req.params.id;
     const name = req.params.name;
     const age = req.params.age;
@@ -29,7 +38,8 @@ exports.getCallPathParam = (req, res, next) => {
     });
 };
 
-exports.getCallQueryParam = (req, res, next) => {
+exports.getCallQueryParam = async (req, res, next) => {
+    await sleep(2000);
     const id = req.query.id;
     const name = req.query.name;
     const age = req.query.age;
@@ -39,7 +49,8 @@ exports.getCallQueryParam = (req, res, next) => {
     });
 };
 
-exports.postCallBody = (req, res, next) => {
+exports.postCallBody = async (req, res, next) => {
+    await sleep(2000);
     const id = req.body.id;
     const name = req.body.name;
     const age = req.body.age;
@@ -49,7 +60,8 @@ exports.postCallBody = (req, res, next) => {
     });
 };
 
-exports.postCallFormData = (req, res, next) => {
+exports.postCallFormData = async (req, res, next) => {
+    await sleep(2000);
     const id = req.body.id;
     const name = req.body.name;
     const age = req.body.age;
@@ -59,36 +71,39 @@ exports.postCallFormData = (req, res, next) => {
     });
 };
 
-exports.singleImageUpload = (req, res, next) => {
-    const image=  req.file.filename;
+exports.singleImageUpload = async (req, res, next) => {
+    await sleep(2000);
+    const image = req.file.filename;
     res.status(200).json({
         status: 1,
         imageUrl: "http://192.168.0.5:3001/images/" + image,
     });
 };
 
-exports.singleImageUploadWithData = (req, res, next) => {
-   const image=  req.file.filename;
+exports.singleImageUploadWithData = async (req, res, next) => {
+    await sleep(2000);
+    const image = req.file.filename;
     const name = req.body.name;
     const age = req.body.age;
     res.status(200).json({
         status: 1,
-        student: {"name": name, "age": age, "imageUrl" : "http://192.168.0.5:3001/images/" + image},
+        student: {"name": name, "age": age, "imageUrl": "http://192.168.0.5:3001/images/" + image},
     });
 };
 
-exports.multipleImageUploadWithData = (req, res, next) => {
-     const image=  req.files;
+exports.multipleImageUploadWithData = async (req, res, next) => {
+    await sleep(2000);
+    const image = req.files;
     const name = req.body.name;
     const age = req.body.age;
 
     var imageUrl = [];
-    for (let  i = 0; i < image.length; i++) {
+    for (let i = 0; i < image.length; i++) {
         imageUrl.push(new ImageModel("http://192.168.0.5:3001/images/" + image[i]['filename']));
     }
 
     res.status(200).json({
         status: 1,
-        student: {"name": name, "age": age, "imageUrl" : imageUrl},
+        student: {"name": name, "age": age, "imageUrl": imageUrl},
     });
 };
